@@ -1,4 +1,4 @@
-function gamma = measure(I)
+function [alpha,T] = measure(I,similarity)
 %myFun - Description
 %
 % Syntax: output = myFun(input)
@@ -29,14 +29,14 @@ bw=(I)>50;
 
 
 
-se = strel('disk',16);
+se = strel('disk',5);
 openbw=imopen(bw,se);
 
 % se = strel('disk',16);
 % openbw=imdilate(bw,se);
 
 openbw=~openbw;
-%%figure,imshow(openbw);
+figure,imshow(openbw);
 
 stats=regionprops(openbw,'basic');%得到方形区域左上角的图像位置和方形区域的大小
 [T_H,T_L]=size(stats);
@@ -130,7 +130,7 @@ end;
 
 dian_index=zeros(1,T_H);
 for i=1:T_H
-    if ss(i,1)<1&&(ss(i,1)-0.50)>0
+    if ss(i,1)<1&&(ss(i,1)-similarity)>0
         dian_index(1,i)=1; 
     end;
 end
@@ -320,6 +320,7 @@ Euler_Aa=atan(C_r1(3,1)/C_r2(3,1))*57.3;
 Euler_Ab=asin((-1)*C_r0(3,1))*57.3;                    %%Ay
 Euler_Ac=atan(C_r0(2,1)/C_r0(1,1))*57.3;
 
-gamma = Euler_Ab;
+alpha = [Euler_Aa;Euler_Ab;Euler_Ac];
+T = [r11(1,3);r11(2,3);r11(3,3)];
 
 end

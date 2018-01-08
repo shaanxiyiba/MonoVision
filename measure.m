@@ -29,7 +29,7 @@ bw=(I)>50;
 
 
 
-se = strel('disk',5);
+se = strel('disk',16);
 openbw=imopen(bw,se);
 
 % se = strel('disk',16);

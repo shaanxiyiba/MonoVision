@@ -1,4 +1,4 @@
-function [R,t] = orthognalIteration(X,Y,R0,epsilon)
+function [R,t,err] = orthognalIteration(X,Y,R0,epsilon)
 %orthogonalIteration - Description
 %
 % Syntax: [R,t] = orthognalIteration(X,Y,R0,epsilon)
@@ -12,6 +12,7 @@ function [R,t] = orthognalIteration(X,Y,R0,epsilon)
 % Output:
 % R - 3 x 3 rotation matrix
 % t - 3 x 1 translation vector
+% err - indicate the transform error
 
 n = size(X,2);
 V = zeros(3,3,n);
@@ -52,6 +53,7 @@ disp(i);
 disp(err(mod(i,2)+1,mod((i-mod(i,2))/2,5)+1));
 
 if((err(mod(i,2)+1,mod((i-mod(i,2))/2,5)+1) == min(min(err)))&& abs(max(err(mod(i,2)+1,:))-min(err(mod(i,2)+1,:)))<epsilon)
+    err = min(min(err));
     break;
 end
 

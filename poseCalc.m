@@ -75,7 +75,7 @@ for ii=1:2
   i = tz*Ip + x0*k;
   j = tz*Jp + y0*k;
   R(:,:,ii) = [i,j,k]';
-  [R(:,:,ii),t(:,:,ii)] = orthogonalIteration(X,Y,R(:,:,ii));
+  [R(:,:,ii),t(:,:,ii),err(ii)] = orthogonalIteration(X,Y,R(:,:,ii),0.05);
 end
 
 

@@ -78,5 +78,8 @@ for ii=1:2
   [R(:,:,ii),t(:,:,ii),err(ii)] = orthogonalIteration(X,Y,R(:,:,ii),0.05);
 end
 
+phi = atan(R(2,1,1)/R(2,2,1))/pi*180;
+alpha = -asin(R(2,3,1))/pi*180;
+gamma = atan(R(1,3,1)/R(3,3,1))/pi*180;
 
 %end

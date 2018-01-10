@@ -58,7 +58,7 @@ delta = B^2 - 4*AA*C;
 delta2 = BB^2 - 4*AAA*CC;
 lambda = [sqrt((-B+sign(AA)*sqrt(delta))/(2*AA)),-sqrt((-B+sign(AA)*sqrt(delta))/(2*AA))]';
 miu = [sqrt((-BB+sign(AAA)*sqrt(delta2))/(2*AAA)),-sqrt((-BB+sign(AAA)*sqrt(delta2))/(2*AAA))]';
-err1 = c*ones(2,2) + lambda*miu' - a*(d*ones(2,2)+2*(repmat(miu,1,2)').^2);
+err1 = c*ones(2,2) + lambda*miu' - a*(d*ones(2,2)+2*(repmat(lambda,1,2)).^2);
 err2 = c*ones(2,2) + lambda*miu' - b*(e*ones(2,2)+2*(repmat(miu,1,2)').^2);
 err = abs(err1) + abs(err2);
 [minR,minC] = find(err==min(min(err)));

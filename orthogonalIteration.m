@@ -1,4 +1,4 @@
-function [R,t,err] = orthognalIteration(X,Y,R0,epsilon)
+function [R,t,err2] = orthognalIteration(X,Y,R0,epsilon)
 %orthogonalIteration - Description
 %
 % Syntax: [R,t] = orthognalIteration(X,Y,R0,epsilon)
@@ -53,7 +53,7 @@ disp(i);
 disp(err(mod(i,2)+1,mod((i-mod(i,2))/2,5)+1));
 
 if((err(mod(i,2)+1,mod((i-mod(i,2))/2,5)+1) == min(min(err)))&& abs(max(err(mod(i,2)+1,:))-min(err(mod(i,2)+1,:)))<epsilon)
-    err = min(min(err));
+    err2 = min(min(err));
     break;
 end
 

@@ -57,6 +57,11 @@ if((err(mod(i,2)+1,mod((i-mod(i,2))/2,5)+1) == min(min(err)))&& abs(max(err(mod(
     break;
 end
 
+if(i>100)
+    err2 = min(min(err));
+    break;
+end
+
 end
 
 

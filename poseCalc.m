@@ -1,4 +1,4 @@
-%function [R,t] = poseCalc(X,Y,camera)
+function [Angle,t] = poseCalc(X,Y)
 %poseCalc - Description
 %
 % Syntax:[R,t] = poseCalc(X,Y,camera)
@@ -11,17 +11,12 @@
 % R - 3 x 3 rotation matrix
 % t - 3 x 1 translation vector
 
-clc;
-clear all;
 %%Camera Params%%
 f = 12.5;      %% Focus length
 dx = 5.5e-3;   %% Width of pixel
 dy = 5.5e-3;   %% Height of pixel
 
-
-X = [-72.5 17.5 127.5 -72.5;18.75 18.75 18.75 -56.25;0 0 0 0;1 1 1 1];
-Y = [452.029785 696.454285 958.67334 446.407532;633.687866 631.050354 628.339355 398.885437];
-Y = (Y - repmat(640,2,4)).*dx./f;
+Y = (Y - repmat([872;876;0],1,4)).*dx./f;
 Y(3,:) = 1;
 
 n = size(X,2);  % Numer of targets
@@ -75,11 +70,13 @@ for ii=1:2
   i = tz*Ip + x0*k;
   j = tz*Jp + y0*k;
   R(:,:,ii) = [i,j,k]';
-  [R(:,:,ii),t(:,:,ii),err(ii)] = orthogonalIteration(X,Y,R(:,:,ii),0.05);
+  [R(:,:,ii),t(:,:,ii),err(ii)] = orthogonalIteration(X,Y,R(:,:,ii),5);
 end
 
 phi = atan(R(2,1,1)/R(2,2,1))/pi*180;
 alpha = -asin(R(2,3,1))/pi*180;
 gamma = atan(R(1,3,1)/R(3,3,1))/pi*180;
 
-%end
+Angle = [phi;alpha;gamma];
+
+end

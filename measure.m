@@ -264,8 +264,11 @@ x1=XYZ1;
 x2=zhixin1;
 
 
-M=x1;
-m=x2;
+X = [-72.5 17.5 127.5 -72.5;
+    18.75 18.75 18.75 -56.25;
+    0 0 0 0;
+    1 1 1 1];
+Y = [x2(:,2),x2(:,3),x2(:,4),x2(:,1)];
 
 %[x1, T1] = normalise2dpts(x1);
 %[x2, T2] = normalise2dpts(x2);
@@ -287,40 +290,13 @@ m=x2;
 %H = T2\H*T1; 
 
 %H=H/H(3,3);
+X = X(1:3,:);
+X(3,:) = 1;
 
-H=x2/x1;
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Maximun likelihood estimation for the H
-% using the function(10), P7
-options = optimset('LargeScale','off');
-x = lsqnonlin( @simon_H, reshape(H,1,9) , [],[],options,m, M);
-H=reshape(x,3,3);
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-r1=(inv(Camera_M))*H;
-ZZc=1/sqrt(r1(1,1)^2+r1(2,1)^2+r1(3,1)^2);
-ZZc2=1/sqrt(r1(1,2)^2+r1(2,2)^2+r1(3,2)^2);
-
-a=sqrt(ZZc*ZZc2);
-r11=a*r1;
-
-C_r0=[r11(1,1);r11(2,1);r11(3,1)];
-C_r1=[r11(1,2);r11(2,2);r11(3,2)];
-
-C_r2=cross(C_r0,C_r1);
-
-Aa=asin((-1)*C_r1(3,1))*57.3;
-Ab=atan((-1)*C_r0(3,1)/C_r2(3,1))*57.3; %%Ay
-Ac=atan(C_r1(1,1)/C_r1(2,1))*57.3;  
-
-
-
-%%  Euler angles
-Euler_Aa=atan(C_r1(3,1)/C_r2(3,1))*57.3;
-Euler_Ab=asin((-1)*C_r0(3,1))*57.3;                    %%Ay
-Euler_Ac=atan(C_r0(2,1)/C_r0(1,1))*57.3;
-
-alpha = [Euler_Aa;Euler_Ab;Euler_Ac];
-T = [r11(1,3);r11(2,3);r11(3,3)];
+%[alpha,T] = poseCalc(X,Y);
+M=[2294.35,0,1172.41;...
+          0,2310.24,885.828;...
+          0,0,1];
+[alpha,T] = mle(X,Y,M);
 
 end

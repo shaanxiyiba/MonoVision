@@ -12,7 +12,7 @@ function [Angle,t] = mle(X,Y,M)
 % t - 3 x 1 translation vector
 
 %%Camera Params%%
-H=Y/X;
+H = getHomographyMatrix(X,Y);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Maximun likelihood estimation for the H

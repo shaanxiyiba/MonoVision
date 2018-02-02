@@ -1,4 +1,4 @@
-function [R,t,err2] = orthognalIteration(X,Y,R0,epsilon)
+function [R,t,err2] = orthogonalIteration(X,Y,R0,epsilon,maxIteration)
 %orthogonalIteration - Description
 %
 % Syntax: [R,t] = orthognalIteration(X,Y,R0,epsilon)
@@ -44,20 +44,23 @@ M = (Q-repmat(mean(Q,2),1,n))*(X - repmat(mean(X,2),1,n))';
 [u,s,v] = svd(M);
 R = v*diag([1,1,det(v*u')])*u';
 
+
+pitch = -asin(R(2,3))/pi*180;
+roll = atan(R(2,1)/R(2,2))/pi*180;
+yaw = atan(R(1,3)/R(3,3))/pi*180;
+
 err(mod(i,2)+1,mod((i-mod(i,2))/2,5)+1) = 0;
 for j=1:n
   err(mod(i,2)+1,mod((i-mod(i,2))/2,5)+1) = err(mod(i,2)+1,mod((i-mod(i,2))/2,5)+1) + norm((eye(3,3)-V(:,:,j))*(R*X(:,j)+t),2);
 end
 err(mod(i,2)+1,mod((i-mod(i,2))/2,5)+1) = err(mod(i,2)+1,mod((i-mod(i,2))/2,5)+1)/n;
-disp(i);
-disp(err(mod(i,2)+1,mod((i-mod(i,2))/2,5)+1));
 
 if((err(mod(i,2)+1,mod((i-mod(i,2))/2,5)+1) == min(min(err)))&& abs(max(err(mod(i,2)+1,:))-min(err(mod(i,2)+1,:)))<epsilon)
     err2 = min(min(err));
     break;
 end
 
-if(i>100)
+if(i>maxIteration)
     err2 = min(min(err));
     break;
 end

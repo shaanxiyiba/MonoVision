@@ -12,9 +12,11 @@ H = 864;
 
 M = [f/dx,0,W/2;0,f/dy,H/2;0,0,1];
 %X = [-72.5, 17.5, 127.5, -72.5;18.75,18.75, 18.75,-56.25;1, 1, 1, 1];
-[x,y] = meshgrid(-90:90:90,-90:90:90);
-x = reshape(x,1,size(x,1)*size(x,2));
-y = reshape(y,1,size(y,1)*size(y,2));
+%[x,y] = meshgrid(-90:90:90,-90:90:90);
+%x = reshape(x,1,size(x,1)*size(x,2));
+%y = reshape(y,1,size(y,1)*size(y,2));
+x = [0 90 200 0 90];
+y = [0 0 0 -75 -75];
 X = [x;y];
 X(3,:) = 1;
 
@@ -48,18 +50,18 @@ end
 % plot(X,Y1,'LineWidth',1,'Marker','*');
 % set(gca,'xlim',[-70,70]);
 % set(gca,'ylim',[-70,70]);
-% xlabel('\beta /¡ã');
-% ylabel('²âÁ¿\alpha /¡ã');
+% xlabel('\beta /ï¿½ï¿½');
+% ylabel('ï¿½ï¿½ï¿½ï¿½\alpha /ï¿½ï¿½');
 % grid(gca,'on');
 % grid(gca,'minor');
 % legend('Z=40mm','Z=80mm','Z=120mm');
-% print('C:\Users\Victo\OneDrive\ÏîÄ¿\µ¥Ä¿ÊÓ¾õ\Y_alpha.png','-dpng','-r1200');
+% print('C:\Users\Victo\OneDrive\ï¿½ï¿½Ä¿\ï¿½ï¿½Ä¿ï¿½Ó¾ï¿½\Y_alpha.png','-dpng','-r1200');
 
 % figure;
 % plot(X,Y2,'LineWidth',1,'Marker','*');
 % set(gca,'xlim',[-70,70]);
-% xlabel('\beta /¡ã');
-% ylabel('²âÁ¿\beta /¡ã');
+% xlabel('\beta /ï¿½ï¿½');
+% ylabel('ï¿½ï¿½ï¿½ï¿½\beta /ï¿½ï¿½');
 % grid(gca,'on');
 % grid(gca,'minor');
 % legend({'Z=40mm','Z=80mm','Z=120mm'},'Location','southeast');
@@ -68,8 +70,8 @@ end
 % figure;
 % plot(X,Y3,'LineWidth',1,'Marker','*');
 % set(gca,'xlim',[-70,70]);
-% xlabel('\beta /¡ã');
-% ylabel('²âÁ¿\gamma /¡ã');
+% xlabel('\beta /ï¿½ï¿½');
+% ylabel('ï¿½ï¿½ï¿½ï¿½\gamma /ï¿½ï¿½');
 % grid(gca,'on');
 % grid(gca,'minor');
 % legend({'Z=40mm','Z=80mm','Z=120mm'},'Location','southeast');
@@ -79,8 +81,8 @@ end
 % set(gca,'xlim',[-70,70],'ylim',[-1.1*max(max(abs(Y2-repmat(X,1,size(Y2,2))))),1.1*max(max(abs(Y2-repmat(X,1,size(Y2,2)))))]);
 % grid(gca,'on');
 % grid(gca,'minor');
-% xlabel('\beta /¡ã');
-% ylabel('E(\beta) /¡ã');
+% xlabel('\beta /ï¿½ï¿½');
+% ylabel('E(\beta) /ï¿½ï¿½');
 % legend('Z=40mm','Z=80mm','Z=120mm');
 
 end

@@ -1,4 +1,4 @@
-function [Angle,t] = poseCalc(X,Y)
+function [Angle,T] = poseCalcOI(X,Y,M,epsilon,maxIteration)
 %poseCalc - Description
 %
 % Syntax:[R,t] = poseCalc(X,Y,camera)
@@ -11,12 +11,7 @@ function [Angle,t] = poseCalc(X,Y)
 % R - 3 x 3 rotation matrix
 % t - 3 x 1 translation vector
 
-%%Camera Params%%
-f = 12.5;      %% Focus length
-dx = 5.5e-3;   %% Width of pixel
-dy = 5.5e-3;   %% Height of pixel
-
-Y = (Y - repmat([872;876;0],1,4)).*dx./f;
+Y = (Y - repmat(M(:,3),1,size(X,2)))./M(1,1);
 Y(3,:) = 1;
 
 n = size(X,2);  % Numer of targets
@@ -70,13 +65,17 @@ for ii=1:2
   i = tz*Ip + x0*k;
   j = tz*Jp + y0*k;
   R(:,:,ii) = [i,j,k]';
-  [R(:,:,ii),t(:,:,ii),err(ii)] = orthogonalIteration(X,Y,R(:,:,ii),5);
+  [R(:,:,ii),t(:,:,ii),err(ii)] = orthogonalIteration(X,Y,R(:,:,ii),epsilon,maxIteration);
 end
 
-phi = atan(R(2,1,1)/R(2,2,1))/pi*180;
-alpha = -asin(R(2,3,1))/pi*180;
-gamma = atan(R(1,3,1)/R(3,3,1))/pi*180;
+if(err(1)<err(2))
+   ii = 1; 
+end
 
-Angle = [phi;alpha;gamma];
+phi = atan(R(2,1,ii)/R(2,2,ii))/pi*180;
+alpha = -asin(R(2,3,ii))/pi*180;
+gamma = atan(R(1,3,ii)/R(3,3,ii))/pi*180;
 
+Angle = [alpha;phi;gamma];
+T = t(:,ii);
 end

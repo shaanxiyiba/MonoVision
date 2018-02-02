@@ -17,7 +17,8 @@ H=Y/X;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Maximun likelihood estimation for the H
 % using the function(10), P7
-options = optimset('LargeScale','off');
+%options = optimset('LargeScale','off');
+options.Algorithm = 'levenberg-marquardt';
 x = lsqnonlin( @simon_H, reshape(H,1,9) , [],[],options,Y, X);
 H=reshape(x,3,3);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

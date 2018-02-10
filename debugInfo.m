@@ -1,0 +1,33 @@
+close all;
+clear all;
+clc;
+f = 12.5;
+dx = 11e-3;
+dy = 11e-3;
+W = 864;
+H = 864;
+
+M = [f/dx,0,W/2;0,f/dy,H/2;0,0,1];
+X = [76,  -14,  -124,  76,   -14;
+ 30,    30,    30,   -45,   -45;
+ 1,   1,    1,  1,   1];
+fid=fopen('C:\Users\Victo\OneDrive\Project\MonoVision\Debug\debug.bin','rb');
+[data,count]=fread(fid,[5,3],'double');
+fclose(fid);
+fid=fopen('C:\Users\Victo\OneDrive\Project\MonoVision\Debug\IMG.bin','rb');
+[img,count]=fread(fid,[864,1728],'uint8');
+fclose(fid);
+data =data';
+img = img'; 
+raw = img(1:864,:);
+thres = img(865:1728,:);
+raw = raw./255;
+thres = thres./255;
+figure;
+imshow(img.*thres);
+hold on;
+data(1:2,:) = data(1:2,:) + repmat(1,size(data,1)-1,size(data,2));
+scatter(data(1,:),data(2,:));
+hold on;
+scatter(1,864);
+[Angle,t] = mle(X,data,M)
